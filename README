@@ -1,0 +1,24 @@
+This is a python app to update Google Latitude with your iPhone location.
+It is based on the location class (http://github.com/dholt/location/tree/master)
+
+Installation:
+* Download and install geopy: http://code.google.com/p/geopy/
+* Create config.py
+  Example config.py contents:
+
+	# mobile me
+	musername = 'username@me.com'
+	mpassword = 'password'
+
+	# gmail
+	gusername = 'username@gmail.com'
+	gpassword = 'password'
+	
+	# google maps
+	googleApiKey = 'your google maps api key'
+
+* Add latitude.py to your crontab:
+  Example:
+	chmod +x latitude.py
+	# Every 30 minutes (careful, this can destroy your battery!)
+	*/30 * * * * latitude.py
