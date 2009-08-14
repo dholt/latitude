@@ -15,7 +15,7 @@ class ForgivingCookieJar(cookielib.CookieJar):
 
 class GoogleScraper():
 
-	def __init__(self, email, password, lat, lon):
+	def __init__(self, email, password, lat, lon, acc):
 		self.location = {}
 		# handlers
 		self.proc = urllib2.HTTPCookieProcessor(ForgivingCookieJar())
@@ -31,6 +31,7 @@ class GoogleScraper():
 					 'submit': 'Sign in',})
 		self.lat = lat
 		self.lon = lon
+		self.acc = acc
 	
 	def update(self):
 		try:
@@ -53,7 +54,7 @@ class GoogleScraper():
 				'OAUTH_SERVICE_NAME': 'google',
 				'authz': 'oauth',
 				'httpMethod': 'GET',
-				'url': 'http://www.google.com/glm/mmap/ig?t=ul&lat=%s&lng=%s&accuracy=10' % (self.lat, self.lon),})
+				'url': 'http://www.google.com/glm/mmap/ig?t=ul&lat=%s&lng=%s&accuracy=%s' % (self.lat, self.lon, self.acc),})
 				
 			# get location
 			post = '%s&st=%s' % (post, token)
@@ -135,7 +136,7 @@ if __name__ == '__main__':
 	if 'noLocation' in location and location['noLocation']:
 		exit(1)
 
-	g = GoogleScraper(gusername, gpassword, location['latitude'], location['longitude'])
+	g = GoogleScraper(gusername, gpassword, location['latitude'], location['longitude'], location['accuracy'])
 	g.update()
 
 	exit(0)
